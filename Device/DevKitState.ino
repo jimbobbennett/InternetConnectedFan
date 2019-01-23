@@ -38,6 +38,7 @@ void initSensor()
 {
   ext_i2c = new DevI2C(D14, D15);
   ht_sensor = new HTS221Sensor(*ext_i2c);
+  ht_sensor->init(NULL);
 }
 
 void getSensorData()
