@@ -15,16 +15,7 @@ using System.Net;
 using System.Net.Http;
 
 namespace FanController
-{
-    public class TemperatureItem
-    {
-        public string PartitionKey {get; set;}
-
-        [JsonProperty("id")]
-        public string Id {get; set;}
-        public double Temperature {get; set;}
-    }
-    
+{    
     public static class Functions
     {
         static readonly string connectionString = Environment.GetEnvironmentVariable("iotHubConnectionString");

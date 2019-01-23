@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FanController"
+             x:Class="FanController.MainPage">
+    <ContentPage.BindingContext>
+        <local:MainPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- Place new controls here -->
+        <Label Text="{Binding Temperature}" 
+               Grid.Row="1"
+               HorizontalOptions="Center"
+               VerticalOptions="CenterAndExpand"
+               TextColor="{Binding TemperatureColor}"
+               FontSize="75"/>
+        <StackLayout Grid.Row="2"
+                     VerticalOptions="Center">
+            <Label HorizontalOptions="Center"
+                   Text="Fan threshold"
+                   TextColor="DarkSlateBlue"
+                   FontSize="Large"/>
+            <Slider HorizontalOptions="Fill"
+                    Margin="20,0"
+                    Maximum="50"
+                    Minimum="10"
+                    MaximumTrackColor="Red"
+                    MinimumTrackColor="Blue"
+                    ThumbColor="DarkSlateBlue"
+                    Value="{Binding TemperatureThreshold}"/>
+            <Label HorizontalOptions="Center"
+                   Text="{Binding TemperatureThresholdText}"
+                   TextColor="DarkSlateBlue"
+                   FontSize="Large"/>
+            <Button HorizontalOptions="Fill"
+                    Text="Set"
+                    BackgroundColor="DarkSlateBlue"
+                    TextColor="White"
+                    FontSize="Large"
+                    Command="{Binding SetThresholdCommand}"
+                    Margin="20,0,20,20"/>
+
+        </StackLayout>
+    </Grid>
+
+</ContentPage>
