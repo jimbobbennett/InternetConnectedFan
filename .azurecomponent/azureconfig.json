@@ -1,0 +1,47 @@
+{
+    "componentConfigs": [
+        {
+            "id": "d6904d0e-333a-3e4f-2302-3d8b3f425039",
+            "folder": "Functions",
+            "name": "",
+            "dependencies": [
+                {
+                    "id": "4191a60e-ccbe-0185-d650-e7636e023c95",
+                    "type": 1
+                }
+            ],
+            "type": "AzureFunctions",
+            "componentInfo": {
+                "values": {
+                    "functionLanguage": "C#"
+                }
+            }
+        },
+        {
+            "id": "f4850ce8-1071-9f61-1f93-e8f1e984c853",
+            "folder": "",
+            "name": "",
+            "dependencies": [],
+            "type": "IoTHub",
+            "componentInfo": {
+                "values": {
+                    "iotHubConnectionString": "",
+                    "eventHubConnectionString": "",
+                    "eventHubConnectionPath": "fan-iot-hub"
+                }
+            }
+        },
+        {
+            "id": "8dfa316a-ffdf-7f9f-4005-dce76dc6008b",
+            "folder": "Functions",
+            "name": "",
+            "dependencies": [
+                {
+                    "id": "f4850ce8-1071-9f61-1f93-e8f1e984c853",
+                    "type": 1
+                }
+            ],
+            "type": "AzureFunctions"
+        }
+    ]
+}
