@@ -168,14 +168,12 @@ void loop()
   {
     rgbLed.setColor(255, 0, 0);
     digitalWrite(PB_0, HIGH);
-    delay(5000);
   }
   else
   {
     rgbLed.setColor(0, 0, 255);
     digitalWrite(PB_0, LOW);
-    delay(5000);
   }
 
-  return;
+  delay(5000);
 }
