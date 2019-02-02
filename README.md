@@ -66,7 +66,7 @@ When you worked through the setup, you would have deployed the code to the devic
 
 When this app is running, you will be able to see telemetry on the messages received by navigating to your IoT hub in the [Azure Portal](https://portal.azure.com/?WT.mc_id=iotfan-github-jabenn).
 
-![Telemetry inside the Azure Portla showing messages being received by the IoT hub](./Images/Telemetry.png)
+![Telemetry inside the Azure Portal showing messages being received by the IoT hub](./Images/Telemetry.png)
 
 ### Azure Function App
 
@@ -78,7 +78,7 @@ The Azure Function app lives in the `Functions` folder, and has 3 functions:
 
 This function app is written in C#, using Azunre Functions V2.
 
-> For the sakoe of simplicity, this app assumes you only have one device and the device id is `fan-controller`.
+> For the sake of simplicity, this app assumes you only have one device and the device id is `fan-controller`.
 
 Before you can wire up the function app, you will need to create a CosmosDB instance using your preferred method (for example the [Azure Portal](https://portal.azure.com/?WT.mc_id=iotfan-github-jabenn)). Ideally this should be in the same resource group as the IoT hub for easier resource management, such as deleting all the resources when you are done. Once this has been created, create a database called `Devices` containing a collection called `Temperatures`. Take a copy of one of the connection strings from the *Read-write Keys* tab of the *Keys* section as you will need this later.
 
@@ -103,11 +103,11 @@ To update the threshold, send a `POST` to `https://<your function app>/api/temp-
 
 ```json
 {
-  "threshold" : <the threshold>
+  "threshold" : <the_threshold>
 }
 ```
 
-setting `<the threshold>` to be a double value of the threshold you want. For example, to set the threshold to 20°C use:
+setting `<the_threshold>` to be a double value of the threshold you want. For example, to set the threshold to 20°C use:
 
 ```json
 {
@@ -119,6 +119,6 @@ setting `<the threshold>` to be a double value of the threshold you want. For ex
 
 To build the mobile app, open the `FanController.sln` file in Visual Studio. Set the Android or iOS app to be the startup app depending on what device you want to run on.
 
-You will need to update the `urlRoot` field in the `FanController\MainViewModel.cs` file to be the function app URL root - so `<your functon app>.azurewebsites.net` without the `https://` part.
+You will need to update the `urlRoot` field in the `FanController\MainViewModel.cs` file to be the function app URL root - so `<your function app>.azurewebsites.net` without the `https://` part.
 
 Launch the app and you will see the temperature. Use the slider to change the threshold and tap the *Set* button to set this threshold. Once you tap *Set* you should see the threshold on the device change and the fan come on or turn off if applicable.
