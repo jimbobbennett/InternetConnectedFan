@@ -7,12 +7,14 @@ using Microsoft.Azure.WebJobs.EventHubs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Azure.EventHubs;
 using Newtonsoft.Json;
 using Microsoft.Azure.Devices;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 
 namespace FanController
 {    
@@ -51,16 +53,17 @@ namespace FanController
         static string GetQueryValue(HttpRequest req, string key) => req.Query.FirstOrDefault(q => string.Compare(q.Key, key, true) == 0).Value;  
 
         [FunctionName("EventHubTrigger")]
-        public static void EventHubTrigger([EventHubTrigger("samples-workitems", Connection = "ecs")] string message,
+        public static void EventHubTrigger([EventHubTrigger("samples-workitems", Connection = "ecs")] EventData message,
             [CosmosDB(
                 databaseName: "Devices",
                 collectionName: "Temperatures",
                 ConnectionStringSetting = "CosmosDBConnection")] out TemperatureItem temperatureItem,
             ILogger log)
         {
-            log.LogInformation($"V2 C# IoT Hub trigger function processed a message: {message}");
-            
-            dynamic data = JsonConvert.DeserializeObject(message);
+            var jsonBody = Encoding.UTF8.GetString(message.Body);
+            log.LogInformation($"V2 C# IoT Hub trigger function processed a message: {jsonBody}");
+
+            dynamic data = JsonConvert.DeserializeObject(jsonBody);
             double temperature = data.temperature;
 
             log.LogInformation($"Temp: {temperature}");
@@ -68,13 +71,13 @@ namespace FanController
             temperatureItem = new TemperatureItem
             {
                 PartitionKey = "temperature",
-                Id = "fan-controller",
+                Id = message.SystemProperties["iothub-connection-device-id"].ToString(),
                 Temperature = temperature
             };
         }
 
         [FunctionName("GetTemperature")]
-        public static async Task<IActionResult> GetTemperature(
+        public static IActionResult GetTemperature(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "temperature/{devicename}")] HttpRequest req,
             [CosmosDB(
                 databaseName: "Devices",
