@@ -1,10 +1,10 @@
 # Internet Connected Fan
 
-This project contains all the code needed to build an internet connected fan using the [MXChip Azure IoT Dev Kit](https://microsoft.github.io/azure-iot-developer-kit/v1/) and [Azure IoT Hub](https://azure.microsoft.com/services/iot-hub/?WT.mc_id=iotfan-github-jabenn).
+This project contains all the code needed to build an internet connected fan using the [MXChip Azure IoT Dev Kit](https://microsoft.github.io/azure-iot-developer-kit/v1/) and [Azure IoT Hub](https://azure.microsoft.com/services/iot-hub/?WT.mc_id=academic-0000-jabenn).
 
 This project detects the current temperature, and if it is above a threshold, it will turn the fan on. It will also send telemetry data with the current temperature to an Azure IoT hub, which in turn triggers an Azure Function to save the temperature into a CosmosDB instance.
 
-This project has a Xamarin mobile app that will poll another Azure Function to get the temperature and show it on screen. It also shows the threshold for turning on the fan, and this threshold can be configured from the app. Setting the value will call another Azure Function that updates the [device twin](https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins/?WT.mc_id=iotfan-github-jabenn) for the device - a JSON document that is kept in sync between the device and the IoT hub. When the value on the hub is updated, it syncs to the device and the temperature threshold is updated, starting the fan if necessary.
+This project has a Xamarin mobile app that will poll another Azure Function to get the temperature and show it on screen. It also shows the threshold for turning on the fan, and this threshold can be configured from the app. Setting the value will call another Azure Function that updates the [device twin](https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-device-twins/?WT.mc_id=academic-0000-jabenn) for the device - a JSON document that is kept in sync between the device and the IoT hub. When the value on the hub is updated, it syncs to the device and the temperature threshold is updated, starting the fan if necessary.
 
 ## Hardware
 
@@ -28,15 +28,15 @@ The software for this is in 3 parts - firmware for the device, some Azure Functi
 
 To build and deploy the firmware and Azure Function app you will need:
 
-* A valid Azure account. Sign up for free [here](https://azure.com/free/?WT.mc_id=iotfan-github-jabenn) if you don't already have an account.
-* [VSCode](https://code.visualstudio.com/?WT.mc_id=iotfan-github-jabenn)
+* A valid Azure account. Sign up for free [here](https://azure.com/free/?WT.mc_id=academic-0000-jabenn) if you don't already have an account.
+* [VSCode](https://code.visualstudio.com/?WT.mc_id=academic-0000-jabenn)
 * The VSCode [IoT Workbench extension](https://github.com/Microsoft/vscode-iot-workbench). This can be installed from inside VSCode.
 
 To build and deploy the mobile app, you will need:
 
-* [Visual Studio](https://visualstudio.microsoft.com/?WT.mc_id=iotfan-github-jabenn). This can be either Visual Studio 2017/2019 on Windows with the Xamarin workload installed, or Visual Studio for Mac.
+* [Visual Studio](https://visualstudio.microsoft.com/?WT.mc_id=academic-0000-jabenn). This can be either Visual Studio 2017/2019 on Windows with the Xamarin workload installed, or Visual Studio for Mac.
 * To deploy on iOS you will need an [Apple Developer Account](https://developer.apple.com).
-* To deploy to an Android device, you will need an Android device configured for [developer mode](https://docs.microsoft.com/xamarin/android/deploy-test/debugging/debug-on-device?WT.mc_id=iotfan-github-jabenn).
+* To deploy to an Android device, you will need an Android device configured for [developer mode](https://docs.microsoft.com/xamarin/android/deploy-test/debugging/debug-on-device?WT.mc_id=academic-0000-jabenn).
 
 ### Setting up the development environment
 
@@ -64,7 +64,7 @@ The device twin callback function, `DeviceTwinCallback`, is called whenever an u
 
 When you worked through the setup, you would have deployed the code to the device, so this should be running already. If you want to re-deploy, use the *Azure IoT Device Workbench: Upload Device Code* option from the Command Palette.
 
-When this app is running, you will be able to see telemetry on the messages received by navigating to your IoT hub in the [Azure Portal](https://portal.azure.com/?WT.mc_id=iotfan-github-jabenn).
+When this app is running, you will be able to see telemetry on the messages received by navigating to your IoT hub in the [Azure Portal](https://portal.azure.com/?WT.mc_id=academic-0000-jabenn).
 
 ![Telemetry inside the Azure Portal showing messages being received by the IoT hub](./Images/Telemetry.png)
 
@@ -80,9 +80,9 @@ This function app is written in C#, using Azunre Functions V2.
 
 > For the sake of simplicity, this app assumes you only have one device and the device id is `fan-controller`.
 
-Before you can wire up the function app, you will need to create a CosmosDB instance using your preferred method (for example the [Azure Portal](https://portal.azure.com/?WT.mc_id=iotfan-github-jabenn)). Ideally this should be in the same resource group as the IoT hub for easier resource management, such as deleting all the resources when you are done. Once this has been created, create a database called `Devices` containing a collection called `Temperatures`. Take a copy of one of the connection strings from the *Read-write Keys* tab of the *Keys* section as you will need this later.
+Before you can wire up the function app, you will need to create a CosmosDB instance using your preferred method (for example the [Azure Portal](https://portal.azure.com/?WT.mc_id=academic-0000-jabenn)). Ideally this should be in the same resource group as the IoT hub for easier resource management, such as deleting all the resources when you are done. Once this has been created, create a database called `Devices` containing a collection called `Temperatures`. Take a copy of one of the connection strings from the *Read-write Keys* tab of the *Keys* section as you will need this later.
 
-To deploy the function app, use the Command Palette and select *Azure IoT Device Workbench: Deploy to Azure...*. Then select *Function App*. This will walk you through the steps to create a new function app in the same resource group as your IoT Hub, and deploy the code to it. Open the function app in the [portal](https://portal.azure.com/?WT.mc_id=iotfan-github-jabenn), and head to the *Application Settings* tab. Add 2 new settings:
+To deploy the function app, use the Command Palette and select *Azure IoT Device Workbench: Deploy to Azure...*. Then select *Function App*. This will walk you through the steps to create a new function app in the same resource group as your IoT Hub, and deploy the code to it. Open the function app in the [portal](https://portal.azure.com/?WT.mc_id=academic-0000-jabenn), and head to the *Application Settings* tab. Add 2 new settings:
 
 * `CosmosDBConnection` - set this to the CosmosDB connection string you copied earlier
 * `ecs` - set this to be the *Event-hub compatible endpoint* value from the *Built-in endpoints* section of the IoT hub.
